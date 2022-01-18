@@ -1,0 +1,10 @@
+C:\Users\timbo\RiderProjects\SamsungAPI2\SamsungAPI2\bin\Debug\netstandard2.0\SamsungAPI2.deps.json
+C:\Users\timbo\RiderProjects\SamsungAPI2\SamsungAPI2\bin\Debug\netstandard2.0\SamsungAPI2.dll
+C:\Users\timbo\RiderProjects\SamsungAPI2\SamsungAPI2\bin\Debug\netstandard2.0\SamsungAPI2.pdb
+C:\Users\timbo\RiderProjects\SamsungAPI2\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.csproj.AssemblyReference.cache
+C:\Users\timbo\RiderProjects\SamsungAPI2\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\timbo\RiderProjects\SamsungAPI2\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.AssemblyInfoInputs.cache
+C:\Users\timbo\RiderProjects\SamsungAPI2\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.AssemblyInfo.cs
+C:\Users\timbo\RiderProjects\SamsungAPI2\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.csproj.CoreCompileInputs.cache
+C:\Users\timbo\RiderProjects\SamsungAPI2\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.dll
+C:\Users\timbo\RiderProjects\SamsungAPI2\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.pdb
