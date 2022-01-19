@@ -1,25 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\TestBed\\TestBed.csproj": {}
+    "C:\\Development\\Web\\samsung-questions-intuiface\\TestBed\\TestBed.csproj": {}
   },
   "projects": {
-    "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\SamsungAPI2\\SamsungAPI2.csproj": {
+    "C:\\Development\\Web\\samsung-questions-intuiface\\SamsungAPI2\\SamsungAPI2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\SamsungAPI2\\SamsungAPI2.csproj",
+        "projectUniqueName": "C:\\Development\\Web\\samsung-questions-intuiface\\SamsungAPI2\\SamsungAPI2.csproj",
         "projectName": "SamsungAPI2",
-        "projectPath": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\SamsungAPI2\\SamsungAPI2.csproj",
-        "packagesPath": "C:\\Users\\timbo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\SamsungAPI2\\obj\\",
+        "projectPath": "C:\\Development\\Web\\samsung-questions-intuiface\\SamsungAPI2\\SamsungAPI2.csproj",
+        "packagesPath": "C:\\Users\\Noel\\.nuget\\packages\\",
+        "outputPath": "C:\\Development\\Web\\samsung-questions-intuiface\\SamsungAPI2\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet"
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\timbo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Noel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -67,26 +66,25 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\TestBed\\TestBed.csproj": {
+    "C:\\Development\\Web\\samsung-questions-intuiface\\TestBed\\TestBed.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\TestBed\\TestBed.csproj",
+        "projectUniqueName": "C:\\Development\\Web\\samsung-questions-intuiface\\TestBed\\TestBed.csproj",
         "projectName": "TestBed",
-        "projectPath": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\TestBed\\TestBed.csproj",
-        "packagesPath": "C:\\Users\\timbo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\TestBed\\obj\\",
+        "projectPath": "C:\\Development\\Web\\samsung-questions-intuiface\\TestBed\\TestBed.csproj",
+        "packagesPath": "C:\\Users\\Noel\\.nuget\\packages\\",
+        "outputPath": "C:\\Development\\Web\\samsung-questions-intuiface\\TestBed\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet"
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\timbo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Noel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -101,8 +99,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\SamsungAPI2\\SamsungAPI2.csproj": {
-                "projectPath": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\SamsungAPI2\\SamsungAPI2.csproj"
+              "C:\\Development\\Web\\samsung-questions-intuiface\\SamsungAPI2\\SamsungAPI2.csproj": {
+                "projectPath": "C:\\Development\\Web\\samsung-questions-intuiface\\SamsungAPI2\\SamsungAPI2.csproj"
               }
             }
           }
@@ -131,7 +129,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }
