@@ -18,3 +18,13 @@ C:\timbo\dev\Source\Repos\samsung-questions-intuiface\SamsungAPI2\obj\Debug\nets
 C:\timbo\dev\Source\Repos\samsung-questions-intuiface\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.csproj.CoreCompileInputs.cache
 C:\timbo\dev\Source\Repos\samsung-questions-intuiface\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.dll
 C:\timbo\dev\Source\Repos\samsung-questions-intuiface\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.pdb
+C:\Development\Web\samsung-questions-intuiface\SamsungAPI2\bin\Debug\netstandard2.0\SamsungAPI2.deps.json
+C:\Development\Web\samsung-questions-intuiface\SamsungAPI2\bin\Debug\netstandard2.0\SamsungAPI2.dll
+C:\Development\Web\samsung-questions-intuiface\SamsungAPI2\bin\Debug\netstandard2.0\SamsungAPI2.pdb
+C:\Development\Web\samsung-questions-intuiface\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.csproj.AssemblyReference.cache
+C:\Development\Web\samsung-questions-intuiface\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Development\Web\samsung-questions-intuiface\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.AssemblyInfoInputs.cache
+C:\Development\Web\samsung-questions-intuiface\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.AssemblyInfo.cs
+C:\Development\Web\samsung-questions-intuiface\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.csproj.CoreCompileInputs.cache
+C:\Development\Web\samsung-questions-intuiface\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.dll
+C:\Development\Web\samsung-questions-intuiface\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.pdb

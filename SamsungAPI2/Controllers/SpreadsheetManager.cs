@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.IO;
 using System.Linq;
-using DocumentFormat.OpenXml.Office2013.Drawing.Chart;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 
@@ -13,21 +11,16 @@ namespace SamsungAPI2
     public class SpreadsheetManager
     {
         Category currentCategory;
-        public ObservableCollection<Category> Categories;
+        public ObservableCollection<Category> Categories { get; set; }
 
-        public SpreadsheetManager(ObservableCollection<Category> categories)
-        {
-            Categories = categories;
-        }
-
-        private Question CurrentQuestion { get; set; } = null;
+        private Question CurrentQuestion { get; set; }
 
         private int CategoryId { get; set; } = 1;
 
         private string GetCellValue(SpreadsheetDocument doc, Cell cell)
         {
             if (cell.CellValue == null || cell.CellValue.InnerText == string.Empty) return string.Empty;
-            
+
             string value = cell.CellValue.InnerText;
             if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
             {
@@ -48,8 +41,8 @@ namespace SamsungAPI2
                 Worksheet worksheet = ((doc.WorkbookPart.GetPartById(sheet.Id.Value)) as WorksheetPart).Worksheet;
                 IEnumerable<Row> rows = worksheet.GetFirstChild<SheetData>().Descendants<Row>();
 
-                currentCategory = new Category(); 
-                    
+                currentCategory = new Category();
+
                 currentCategory.Name = sheet.Name;
                 currentCategory.Id = CategoryId;
 
@@ -64,11 +57,11 @@ namespace SamsungAPI2
                         {
                             var colunmName = firstRowIsHeader ? GetCellValue(doc, cell) : "Field" + j;
                             Console.WriteLine(colunmName);
-                            
+
                             if (j > 7) // Product columns, so create a new product for each
                             {
-                                currentCategory.Products.Add(new Product()
-                                {
+                                currentCategory.Products.Add(new Product
+                                                             {
                                     Id = iProd,
                                     Name = colunmName,
                                     Description = colunmName
@@ -148,25 +141,24 @@ namespace SamsungAPI2
         {
             if (!currentCategory.Questions.Exists(x => x.Id == questionId))
             {
-                currentCategory.Questions.Add(new Question()
-                {
+                currentCategory.Questions.Add(new Question
+                                              {
                     Id = questionId,
                     Text = questionText,
                     Order = questionOrder,
-                    QuestionDisplayType =
-                        (QuestionDisplayType)Enum.Parse(typeof(QuestionDisplayType), questionType, true)
+                    QuestionDisplayType = 0 //TODO
                 });
-                
+
                 CurrentQuestion = currentCategory.Questions.FirstOrDefault(x => x.Id == questionId);
             }
-            
+
         }
 
         private void AnswersAppendDetails( int answerId, string answerText, int answerOrder)
         {
-           
-            CurrentQuestion.Answers.Add(new Answer()
-            {
+
+            CurrentQuestion.Answers.Add(new Answer
+                                        {
                 Id = answerId,
                 Text = answerText,
                 Order = answerOrder
@@ -179,8 +171,8 @@ namespace SamsungAPI2
 
             if (answer != null)
             {
-                answer.AnswerWeighting.Add(new AnswerWeighting()
-                {
+                answer.AnswerWeighting.Add(new AnswerWeighting
+                                           {
                     ProductId = productId,
                     Weight = weighting
                 });

@@ -7,13 +7,18 @@ namespace SamsungAPI2
     public class Category
     {
         public string Name { get; set; }
-        
+
         public int Id { get; set; }
-        
+
+        public int QuestionsLength
+        {
+            get => Questions.Count;
+        }
+
         public List<Question> Questions { get; set; } = new List<Question>();
 
         public List<Product> Products { get; set; } = new List<Product>();
-        
+
         public ObservableCollection<Product> ProductResults { get; set; } = new ObservableCollection<Product>();
 
         public void GetTopItems(int topItemCount)
@@ -30,10 +35,10 @@ namespace SamsungAPI2
         {
             foreach (Product product in Products)
             {
-                product.ProductScore.Reset();                
+                product.ProductScore.Reset();
             }
         }
-        
+
         public void SelectAnswer(int questionId, int answerId, bool isSelected)
         {
             Question question = Questions.Find(x => x.Id == questionId);
@@ -44,9 +49,9 @@ namespace SamsungAPI2
                 foreach (AnswerWeighting answerWeight in answer.AnswerWeighting)
                 {
                     Product product = Products.Find(x => x.Id == answerWeight.ProductId);
-                    
+
                     if(product == null) return;
-                    
+
                     if (isSelected)
                     {
                         product.ProductScore.Add(answerWeight.Weight);
@@ -58,7 +63,7 @@ namespace SamsungAPI2
                 }
             }
         }
-        
+
 
     }
 }
