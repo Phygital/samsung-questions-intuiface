@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/0Bu5KBrpSdJZgSgNLTwBAjO+r0kIRT6klYJTCL9AD7SaL3CttKdtv3ECof8ZcWTQS9T9MOUTCP4/EXMNW9eZA==",
+  "dgSpecHash": "+BMRIRWPuEvulNHW8UFe00eLYjik7IX8ezAVqRXzawrlPLiw2S0p5JpLzRNL9i4Ubt5Kpg8I/b3mf8ZYLef6Tw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\TestBed\\TestBed.csproj",
+  "projectFilePath": "C:\\timbo\\dev\\Source\\Repos\\samsung-questions-intuiface\\TestBed\\TestBed.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\timbo\\.nuget\\packages\\documentformat.openxml\\2.7.1\\documentformat.openxml.2.7.1.nupkg.sha512",
     "C:\\Users\\timbo\\.nuget\\packages\\microsoft.netcore.platforms\\1.0.1\\microsoft.netcore.platforms.1.0.1.nupkg.sha512",

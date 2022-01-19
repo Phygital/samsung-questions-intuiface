@@ -3,7 +3,7 @@
   "discoveryVersion": "v1",
   "id": "SamsungAPI2",
   "name": "SamsungAPI2",
-  "version": "1.9",
+  "version": "1.11",
   "protocol": "dll",
   "baseUrl": null,
   "basePath": "SamsungAPI2",
@@ -11,7 +11,7 @@
   "dependencies": [
     "SamsungAPI2.dll",
     "DocumentFormat.OpenXml.dll",
-    "System.Dll"
+    "System.IO.Packaging.dll"
   ],
   "schemas": {
     "SamsungQuestionsManager": {

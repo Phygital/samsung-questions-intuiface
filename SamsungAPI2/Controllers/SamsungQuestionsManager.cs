@@ -8,7 +8,7 @@ namespace SamsungAPI2
         private string fname = "./Assets/Spreadsheets/SamsungQuestions.xlsx";
         public SamsungQuestionsManager()
         {
-            SpreadsheetManager spreadsheetManager = new SpreadsheetManager();
+            SpreadsheetManager spreadsheetManager = new SpreadsheetManager(_categories);
             spreadsheetManager.ReadSpreadSheet(fname, true);
         }
 
@@ -26,31 +26,31 @@ namespace SamsungAPI2
 
         private ObservableCollection<Category> _categories = new ObservableCollection<Category>()
         {
-            new Category()
-            {
-                Id = 0,
-                Name = "Laptop"
-            },
-            new Category()
-            {
-                Id = 1,
-                Name = "Tablet"
-            },
-            new Category()
-            {
-                Id = 2,
-                Name = "Mobile"
-            },
-            new Category()
-            {
-                Id = 3,
-                Name = "Hearable"
-            },
-            new Category()
-            {
-                Id = 4,
-                Name = "Wearables"
-            },
+            // new Category()
+            // {
+            //     Id = 0,
+            //     Name = "Laptop"
+            // },
+            // new Category()
+            // {
+            //     Id = 1,
+            //     Name = "Tablet"
+            // },
+            // new Category()
+            // {
+            //     Id = 2,
+            //     Name = "Mobile"
+            // },
+            // new Category()
+            // {
+            //     Id = 3,
+            //     Name = "Hearable"
+            // },
+            // new Category()
+            // {
+            //     Id = 4,
+            //     Name = "Wearables"
+            // },
         };
 
         public ObservableCollection<Category> Categories

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\SamsungAPI2\\SamsungAPI2.csproj": {}
+    "C:\\timbo\\dev\\Source\\Repos\\samsung-questions-intuiface\\SamsungAPI2\\SamsungAPI2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\SamsungAPI2\\SamsungAPI2.csproj": {
+    "C:\\timbo\\dev\\Source\\Repos\\samsung-questions-intuiface\\SamsungAPI2\\SamsungAPI2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\SamsungAPI2\\SamsungAPI2.csproj",
+        "projectUniqueName": "C:\\timbo\\dev\\Source\\Repos\\samsung-questions-intuiface\\SamsungAPI2\\SamsungAPI2.csproj",
         "projectName": "SamsungAPI2",
-        "projectPath": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\SamsungAPI2\\SamsungAPI2.csproj",
+        "projectPath": "C:\\timbo\\dev\\Source\\Repos\\samsung-questions-intuiface\\SamsungAPI2\\SamsungAPI2.csproj",
         "packagesPath": "C:\\Users\\timbo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\SamsungAPI2\\obj\\",
+        "outputPath": "C:\\timbo\\dev\\Source\\Repos\\samsung-questions-intuiface\\SamsungAPI2\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

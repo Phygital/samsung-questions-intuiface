@@ -11,5 +11,7 @@ namespace SamsungAPI2
         public int Order { get; set; }
 
         public List<AnswerWeighting> AnswerWeighting { get; set; } = new List<AnswerWeighting>();
+
+
     }
 }

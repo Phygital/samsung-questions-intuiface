@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using DocumentFormat.OpenXml.Office2013.Drawing.Chart;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 
@@ -10,18 +12,17 @@ namespace SamsungAPI2
 {
     public class SpreadsheetManager
     {
-        public SpreadsheetManager()
-        {
-            CategoryQaMatrix = new CategoryQAMatrix();
-        }
+        Category currentCategory;
+        public ObservableCollection<Category> Categories;
 
-        public CategoryQAMatrix CategoryQaMatrix { get; set; }
+        public SpreadsheetManager(ObservableCollection<Category> categories)
+        {
+            Categories = categories;
+        }
 
         private Question CurrentQuestion { get; set; } = null;
 
         private int CategoryId { get; set; } = 1;
-
-        List<string> Headers = new List<string>();
 
         private string GetCellValue(SpreadsheetDocument doc, Cell cell)
         {
@@ -39,12 +40,7 @@ namespace SamsungAPI2
 
         public bool ReadSpreadSheet(string fname, bool firstRowIsHeader)
         {
-            string currentLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string codeBaseLocation = System.Reflection.Assembly.GetExecutingAssembly().CodeBase;
-
             if (!File.Exists(fname)) return false;
-
-            DataTable dt = new DataTable();
 
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(fname, false))
             {
@@ -52,8 +48,10 @@ namespace SamsungAPI2
                 Worksheet worksheet = ((doc.WorkbookPart.GetPartById(sheet.Id.Value)) as WorksheetPart).Worksheet;
                 IEnumerable<Row> rows = worksheet.GetFirstChild<SheetData>().Descendants<Row>();
 
-                CategoryQaMatrix.Category.Name = sheet.Name;
-                CategoryQaMatrix.Category.Id = CategoryId;
+                currentCategory = new Category(); 
+                    
+                currentCategory.Name = sheet.Name;
+                currentCategory.Id = CategoryId;
 
                 foreach (Row row in rows)
                 {
@@ -66,12 +64,10 @@ namespace SamsungAPI2
                         {
                             var colunmName = firstRowIsHeader ? GetCellValue(doc, cell) : "Field" + j;
                             Console.WriteLine(colunmName);
-                            Headers.Add(colunmName);
-                            dt.Columns.Add(colunmName);
-
+                            
                             if (j > 7) // Product columns, so create a new product for each
                             {
-                                CategoryQaMatrix.Products.Add(new Product()
+                                currentCategory.Products.Add(new Product()
                                 {
                                     Id = iProd,
                                     Name = colunmName,
@@ -85,7 +81,6 @@ namespace SamsungAPI2
                     }
                     else
                     {
-                        dt.Rows.Add();
                         int i = 0;
                         int questionId = 0;
                         string questionText = string.Empty;
@@ -96,11 +91,10 @@ namespace SamsungAPI2
                         string answerText = string.Empty;
                         int answerOrder = 0;
 
-                        int iprod = 0;
+                        int iprod = 1;
                         foreach (Cell cell in row.Descendants<Cell>())
                         {
                             string cellValue = GetCellValue(doc, cell);
-                            dt.Rows[dt.Rows.Count - 1][i] = cellValue;
                             switch (i)
                             {
                                 case 0: //QuestionId
@@ -143,6 +137,8 @@ namespace SamsungAPI2
                         }
                     }
                 }
+                //Add Category to collection
+                Categories.Add(currentCategory);
             }
 
             return true;
@@ -150,9 +146,9 @@ namespace SamsungAPI2
 
         private void QuestionAppendDetails(int questionId, string questionText, int questionOrder, string questionType)
         {
-            if (!CategoryQaMatrix.Questions.Exists(x => x.Id == questionId))
+            if (!currentCategory.Questions.Exists(x => x.Id == questionId))
             {
-                CategoryQaMatrix.Questions.Add(new Question()
+                currentCategory.Questions.Add(new Question()
                 {
                     Id = questionId,
                     Text = questionText,
@@ -161,7 +157,7 @@ namespace SamsungAPI2
                         (QuestionDisplayType)Enum.Parse(typeof(QuestionDisplayType), questionType, true)
                 });
                 
-                CurrentQuestion = CategoryQaMatrix.Questions.FirstOrDefault(x => x.Id == questionId);
+                CurrentQuestion = currentCategory.Questions.FirstOrDefault(x => x.Id == questionId);
             }
             
         }

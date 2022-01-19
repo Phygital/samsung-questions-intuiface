@@ -1872,11 +1872,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\TestBed\\TestBed.csproj",
+      "projectUniqueName": "C:\\timbo\\dev\\Source\\Repos\\samsung-questions-intuiface\\TestBed\\TestBed.csproj",
       "projectName": "TestBed",
-      "projectPath": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\TestBed\\TestBed.csproj",
+      "projectPath": "C:\\timbo\\dev\\Source\\Repos\\samsung-questions-intuiface\\TestBed\\TestBed.csproj",
       "packagesPath": "C:\\Users\\timbo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\TestBed\\obj\\",
+      "outputPath": "C:\\timbo\\dev\\Source\\Repos\\samsung-questions-intuiface\\TestBed\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -1899,8 +1899,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\SamsungAPI2\\SamsungAPI2.csproj": {
-              "projectPath": "C:\\Users\\timbo\\RiderProjects\\SamsungAPI2\\SamsungAPI2\\SamsungAPI2.csproj"
+            "C:\\timbo\\dev\\Source\\Repos\\samsung-questions-intuiface\\SamsungAPI2\\SamsungAPI2.csproj": {
+              "projectPath": "C:\\timbo\\dev\\Source\\Repos\\samsung-questions-intuiface\\SamsungAPI2\\SamsungAPI2.csproj"
             }
           }
         }
