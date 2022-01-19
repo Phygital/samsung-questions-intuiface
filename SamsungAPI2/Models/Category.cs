@@ -14,6 +14,11 @@ namespace SamsungAPI2
 
         public List<Product> Products { get; set; } = new List<Product>();
         
+        public int QuestionsLength
+        {
+            get => Questions.Count;
+        }
+        
         public ObservableCollection<Product> ProductResults { get; set; } = new ObservableCollection<Product>();
 
         public void GetTopItems(int topItemCount)

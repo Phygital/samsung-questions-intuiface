@@ -18,3 +18,4 @@ C:\timbo\dev\Source\Repos\samsung-questions-intuiface\SamsungAPI2\obj\Debug\nets
 C:\timbo\dev\Source\Repos\samsung-questions-intuiface\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.csproj.CoreCompileInputs.cache
 C:\timbo\dev\Source\Repos\samsung-questions-intuiface\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.dll
 C:\timbo\dev\Source\Repos\samsung-questions-intuiface\SamsungAPI2\obj\Debug\netstandard2.0\SamsungAPI2.pdb
+C:\timbo\dev\Source\Repos\samsung-questions-intuiface\SamsungAPI2\bin\Debug\netstandard2.0\SamsungQuestions.xlsx

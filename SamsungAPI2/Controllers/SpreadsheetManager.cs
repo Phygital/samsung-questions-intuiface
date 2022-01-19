@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using DocumentFormat.OpenXml.Office2013.Drawing.Chart;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
@@ -13,11 +14,9 @@ namespace SamsungAPI2
     public class SpreadsheetManager
     {
         Category currentCategory;
-        public ObservableCollection<Category> Categories;
 
-        public SpreadsheetManager(ObservableCollection<Category> categories)
+        public SpreadsheetManager()
         {
-            Categories = categories;
         }
 
         private Question CurrentQuestion { get; set; } = null;
@@ -38,10 +37,24 @@ namespace SamsungAPI2
             return value;
         }
 
-        public bool ReadSpreadSheet(string fname, bool firstRowIsHeader)
+        public List<Category> ReadSpreadSheet(string fname, bool firstRowIsHeader)
         {
-            if (!File.Exists(fname)) return false;
+            if (!File.Exists(fname))
+            {
+                return new List<Category>(){new Category()
+                {
+                    Id = 99,Name = "File Not Found"
+                },
+                    new Category()
+                    {
+                        Id = 98,
+                        Name = Assembly.GetExecutingAssembly().Location
+                    }
+                };
+            }
 
+            var categories = new List<Category>();
+            
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(fname, false))
             {
                 Sheet sheet = doc.WorkbookPart.Workbook.Sheets.GetFirstChild<Sheet>();
@@ -138,10 +151,10 @@ namespace SamsungAPI2
                     }
                 }
                 //Add Category to collection
-                Categories.Add(currentCategory);
+                categories.Add(currentCategory);
             }
 
-            return true;
+            return categories;
         }
 
         private void QuestionAppendDetails(int questionId, string questionText, int questionOrder, string questionType)
@@ -153,8 +166,8 @@ namespace SamsungAPI2
                     Id = questionId,
                     Text = questionText,
                     Order = questionOrder,
-                    QuestionDisplayType =
-                        (QuestionDisplayType)Enum.Parse(typeof(QuestionDisplayType), questionType, true)
+                    QuestionDisplayType = questionType
+                        //(QuestionDisplayType)Enum.Parse(typeof(QuestionDisplayType), questionType, true)
                 });
                 
                 CurrentQuestion = currentCategory.Questions.FirstOrDefault(x => x.Id == questionId);

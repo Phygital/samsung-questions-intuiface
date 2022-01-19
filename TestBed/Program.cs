@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using SamsungAPI2;
 
 namespace TestBed
@@ -11,19 +12,19 @@ namespace TestBed
         
         private static string fname = "../../../../SamsungAPI2/Assets/Spreadsheets/SamsungQuestions.xlsx";
         
-        private static  ObservableCollection<Category> _categories = new ObservableCollection<Category>();
+        // private static  ObservableCollection<Category> _categories = new ObservableCollection<Category>();
         
         static void Main(string[] args)
         {
-            SpreadsheetManager spreadsheetManager = new SpreadsheetManager(_categories);
+            SamsungQuestionsManager samsungQuestionsManager = new SamsungQuestionsManager(); 
+            
             Category category;
             
-            bool readOk = spreadsheetManager.ReadSpreadSheet(fname, true);
-
-            category = spreadsheetManager.Categories[0];
             
-            if (readOk)
+            if (samsungQuestionsManager.Categories.Any())
             {
+                category = samsungQuestionsManager.Categories[0];
+                
                 Console.WriteLine(category.Name);
                 Console.WriteLine(category.Questions);
                 Console.WriteLine(category.Products);

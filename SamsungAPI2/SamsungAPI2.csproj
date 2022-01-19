@@ -5,11 +5,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Assets\Spreadsheets" />
+      <PackageReference Include="DocumentFormat.OpenXml" Version="2.7.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="DocumentFormat.OpenXml" Version="2.7.1" />
+      <None Update="SamsungQuestions.xlsx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

@@ -10,7 +10,7 @@ namespace SamsungAPI2
         
         public int Order { get; set; }
        
-        public QuestionDisplayType QuestionDisplayType { get; set; }
+        public string QuestionDisplayType { get; set; }
 
         public List<Answer> Answers { get; set; } = new List<Answer>();
     }

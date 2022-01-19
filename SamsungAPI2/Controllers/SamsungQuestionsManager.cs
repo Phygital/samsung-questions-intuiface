@@ -5,11 +5,11 @@ namespace SamsungAPI2
 {
     public class SamsungQuestionsManager : INotifyPropertyChanged
     {
-        private string fname = "./Assets/Spreadsheets/SamsungQuestions.xlsx";
+        private string fname = "SamsungQuestions.xlsx";
         public SamsungQuestionsManager()
         {
-            SpreadsheetManager spreadsheetManager = new SpreadsheetManager(_categories);
-            spreadsheetManager.ReadSpreadSheet(fname, true);
+            SpreadsheetManager spreadsheetManager = new SpreadsheetManager();
+            _categories = new ObservableCollection<Category>(spreadsheetManager.ReadSpreadSheet(fname, true));
         }
 
         private int _counter = 0;
@@ -23,35 +23,12 @@ namespace SamsungAPI2
                 OnPropertyChanged(nameof(Counter));
             }
         } 
-
-        private ObservableCollection<Category> _categories = new ObservableCollection<Category>()
+        public int CategoriesLength
         {
-            // new Category()
-            // {
-            //     Id = 0,
-            //     Name = "Laptop"
-            // },
-            // new Category()
-            // {
-            //     Id = 1,
-            //     Name = "Tablet"
-            // },
-            // new Category()
-            // {
-            //     Id = 2,
-            //     Name = "Mobile"
-            // },
-            // new Category()
-            // {
-            //     Id = 3,
-            //     Name = "Hearable"
-            // },
-            // new Category()
-            // {
-            //     Id = 4,
-            //     Name = "Wearables"
-            // },
-        };
+            get => Categories.Count;
+        }
+
+        private ObservableCollection<Category> _categories;
 
         public ObservableCollection<Category> Categories
         {
