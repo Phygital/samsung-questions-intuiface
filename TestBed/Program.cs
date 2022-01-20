@@ -10,7 +10,7 @@ namespace TestBed
     class Program
     {
         
-        private static string fname = "../../../../SamsungAPI2/Assets/Spreadsheets/SamsungQuestions.xlsx";
+        //private static string fname = "../../../../SamsungAPI2/Assets/Spreadsheets/SamsungQuestions.xlsx";
         
         // private static  ObservableCollection<Category> _categories = new ObservableCollection<Category>();
         
@@ -59,7 +59,7 @@ namespace TestBed
             }
             else
             {
-                Console.WriteLine($"Failed to read file {fname}");
+                Console.WriteLine($"Failed to read file");
             }
         }
     }

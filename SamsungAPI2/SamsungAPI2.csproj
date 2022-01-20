@@ -9,7 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="SamsungQuestions.xlsx">
+      <None Update="2SamsungQuestions.xlsx\SamsungQuestions.xlsx">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

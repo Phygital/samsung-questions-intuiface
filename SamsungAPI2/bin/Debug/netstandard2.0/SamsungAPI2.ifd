@@ -3,7 +3,7 @@
   "discoveryVersion": "v1",
   "id": "SamsungAPI2",
   "name": "SamsungAPI2",
-  "version": "1.14",
+  "version": "1.17",
   "protocol": "dll",
   "baseUrl": null,
   "basePath": "SamsungAPI2",

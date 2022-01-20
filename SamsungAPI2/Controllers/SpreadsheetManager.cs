@@ -26,7 +26,7 @@ namespace SamsungAPI2
         private string GetCellValue(SpreadsheetDocument doc, Cell cell)
         {
             if (cell.CellValue == null || cell.CellValue.InnerText == string.Empty) return string.Empty;
-            
+
             string value = cell.CellValue.InnerText;
             if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
             {
@@ -41,120 +41,134 @@ namespace SamsungAPI2
         {
             if (!File.Exists(fname))
             {
-                return new List<Category>(){new Category()
+                return new List<Category>()
                 {
-                    Id = 99,Name = "File Not Found"
-                },
+                    new Category()
+                    {
+                        Id = 99, Name = $"File Not Found: {fname}"
+                    },
                     new Category()
                     {
                         Id = 98,
-                        Name = Assembly.GetExecutingAssembly().Location
+                        Name = Assembly.GetExecutingAssembly().Location,
                     }
                 };
             }
 
             var categories = new List<Category>();
-            
+
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(fname, false))
             {
-                Sheet sheet = doc.WorkbookPart.Workbook.Sheets.GetFirstChild<Sheet>();
-                Worksheet worksheet = ((doc.WorkbookPart.GetPartById(sheet.Id.Value)) as WorksheetPart).Worksheet;
-                IEnumerable<Row> rows = worksheet.GetFirstChild<SheetData>().Descendants<Row>();
+                //Sheet sheet = doc.WorkbookPart.Workbook.Sheets.GetFirstChild<Sheet>();
 
-                currentCategory = new Category(); 
-                    
-                currentCategory.Name = sheet.Name;
-                currentCategory.Id = CategoryId;
-
-                foreach (Row row in rows)
+                foreach (var openXmlElement in doc.WorkbookPart.Workbook.Sheets)
                 {
-                    //Read the first row as header
-                    if (row.RowIndex.Value == 1)
+                    var sheet = (Sheet)openXmlElement;
+                    
+                    Worksheet worksheet = ((doc.WorkbookPart.GetPartById(sheet.Id.Value)) as WorksheetPart).Worksheet;
+                    IEnumerable<Row> rows = worksheet.GetFirstChild<SheetData>().Descendants<Row>();
+
+                    currentCategory = new Category();
+
+                    currentCategory.Name = sheet.Name;
+                    currentCategory.Id = CategoryId;
+
+                    foreach (Row row in rows)
                     {
-                        int iProd = 1;
-                        var j = 1;
-                        foreach (Cell cell in row.Descendants<Cell>())
+                        //Read the first row as header
+                        if (row.RowIndex.Value == 1)
                         {
-                            var colunmName = firstRowIsHeader ? GetCellValue(doc, cell) : "Field" + j;
-                            Console.WriteLine(colunmName);
-                            
-                            if (j > 7) // Product columns, so create a new product for each
+                            int iProd = 1;
+                            var j = 1;
+                            foreach (Cell cell in row.Descendants<Cell>())
                             {
-                                currentCategory.Products.Add(new Product()
+                                var colunmName = firstRowIsHeader ? GetCellValue(doc, cell) : "Field" + j;
+                                Console.WriteLine(colunmName);
+
+                                if (j > 7) // Product columns, so create a new product for each
                                 {
-                                    Id = iProd,
-                                    Name = colunmName,
-                                    Description = colunmName
-                                });
-                                iProd++;
+                                    currentCategory.Products.Add(new Product()
+                                    {
+                                        Id = iProd,
+                                        Name = colunmName,
+                                        Description = colunmName
+                                    });
+                                    iProd++;
+                                }
+
+                                j++;
                             }
-
-                            j++;
                         }
-                    }
-                    else
-                    {
-                        int i = 0;
-                        int questionId = 0;
-                        string questionText = string.Empty;
-                        string questionType = string.Empty;
-                        int questionOrder = 0;
-
-                        int answerId = 0;
-                        string answerText = string.Empty;
-                        int answerOrder = 0;
-
-                        int iprod = 1;
-                        foreach (Cell cell in row.Descendants<Cell>())
+                        else
                         {
-                            string cellValue = GetCellValue(doc, cell);
-                            switch (i)
+                            int i = 0;
+                            int questionId = 0;
+                            string questionText = string.Empty;
+                            string questionType = string.Empty;
+                            int questionOrder = 0;
+
+                            int answerId = 0;
+                            string answerText = string.Empty;
+                            int answerOrder = 0;
+
+                            int iprod = 1;
+                            foreach (Cell cell in row.Descendants<Cell>())
                             {
-                                case 0: //QuestionId
-                                    questionId = int.Parse(cellValue);
-                                    break;
-                                case 1: //Question Text
-                                    questionText = cellValue;
-                                    break;
+                                string cellValue = GetCellValue(doc, cell);
 
-                                case 2: //Question Order
-                                    questionOrder = int.Parse(cellValue);
-                                    break;
+                                if (cellValue != string.Empty)
+                                {
+                                    switch (i)
+                                    {
+                                        case 0: //QuestionId
+                                            questionId = int.Parse(cellValue);
+                                            break;
+                                        case 1: //Question Text
+                                            questionText = cellValue;
+                                            break;
 
-                                case 3: //Question Type
-                                    questionType = cellValue;
-                                    QuestionAppendDetails(questionId, questionText, questionOrder, questionType);
+                                        case 2: //Question Order
+                                            questionOrder = int.Parse(cellValue);
+                                            break;
 
-                                    break;
+                                        case 3: //Question Type
+                                            questionType = cellValue;
+                                            QuestionAppendDetails(questionId, questionText, questionOrder,
+                                                questionType);
 
-                                case 4: //AnswerTest
-                                    answerText = cellValue;
-                                    break;
+                                            break;
 
-                                case 5: //AnswerId
-                                    answerId = int.Parse(cellValue);
-                                    break;
+                                        case 4: //AnswerTest
+                                            answerText = cellValue;
+                                            break;
 
-                                case 6: //Answer Order
-                                    answerOrder = int.Parse(cellValue);
-                                    AnswersAppendDetails( answerId, answerText, answerOrder);
-                                    break;
+                                        case 5: //AnswerId
+                                            answerId = int.Parse(cellValue);
+                                            break;
 
-                                default: //product coloumns 6 and greater
-                                    AnswersAppendWeighting(answerId, iprod, int.Parse(cellValue));
-                                    iprod++;
-                                    break;
+                                        case 6: //Answer Order
+                                            answerOrder = int.Parse(cellValue);
+                                            AnswersAppendDetails(answerId, answerText, answerOrder);
+                                            break;
+
+                                        default: //product coloumns 6 and greater
+                                            AnswersAppendWeighting(answerId, iprod, int.Parse(cellValue));
+                                            iprod++;
+                                            break;
+                                    }
+                                }
+
+                                i++;
                             }
-
-                            i++;
                         }
                     }
-                }
-                //Add Category to collection
-                categories.Add(currentCategory);
-            }
 
-            return categories;
+                    //Add Category to collection
+                    categories.Add(currentCategory);
+                }
+
+                return categories;
+            }
         }
 
         private void QuestionAppendDetails(int questionId, string questionText, int questionOrder, string questionType)
@@ -167,17 +181,15 @@ namespace SamsungAPI2
                     Text = questionText,
                     Order = questionOrder,
                     QuestionDisplayType = questionType
-                        //(QuestionDisplayType)Enum.Parse(typeof(QuestionDisplayType), questionType, true)
+                    //(QuestionDisplayType)Enum.Parse(typeof(QuestionDisplayType), questionType, true)
                 });
-                
+
                 CurrentQuestion = currentCategory.Questions.FirstOrDefault(x => x.Id == questionId);
             }
-            
         }
 
-        private void AnswersAppendDetails( int answerId, string answerText, int answerOrder)
+        private void AnswersAppendDetails(int answerId, string answerText, int answerOrder)
         {
-           
             CurrentQuestion.Answers.Add(new Answer()
             {
                 Id = answerId,

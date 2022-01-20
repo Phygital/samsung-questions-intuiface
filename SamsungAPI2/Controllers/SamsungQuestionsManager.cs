@@ -1,13 +1,25 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Reflection;
 
 namespace SamsungAPI2
 {
     public class SamsungQuestionsManager : INotifyPropertyChanged
     {
-        private string fname = "SamsungQuestions.xlsx";
         public SamsungQuestionsManager()
         {
+#if DEBUG
+            var fname = "../../../SamsungQuestions.xlsx/SamsungQuestions.xlsx";
+#else
+            var fname = "./SamsungQuestions.xlsx/SamsungQuestions.xlsx";
+#endif
+            if (!File.Exists(fname))
+            {
+                Console.WriteLine(Assembly.GetExecutingAssembly().Location);    
+            }
+            
             SpreadsheetManager spreadsheetManager = new SpreadsheetManager();
             _categories = new ObservableCollection<Category>(spreadsheetManager.ReadSpreadSheet(fname, true));
         }
