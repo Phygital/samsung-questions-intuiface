@@ -56,13 +56,16 @@ namespace SamsungAPI2
             }
 
             var categories = new List<Category>();
-
+            int categoryId = 0;
+            
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(fname, false))
             {
                 //Sheet sheet = doc.WorkbookPart.Workbook.Sheets.GetFirstChild<Sheet>();
-
+                    
                 foreach (var openXmlElement in doc.WorkbookPart.Workbook.Sheets)
                 {
+                    categoryId++;
+                    
                     var sheet = (Sheet)openXmlElement;
                     
                     Worksheet worksheet = ((doc.WorkbookPart.GetPartById(sheet.Id.Value)) as WorksheetPart).Worksheet;
@@ -71,7 +74,7 @@ namespace SamsungAPI2
                     currentCategory = new Category();
 
                     currentCategory.Name = sheet.Name;
-                    currentCategory.Id = CategoryId;
+                    currentCategory.Id = categoryId;
 
                     foreach (Row row in rows)
                     {
@@ -148,7 +151,7 @@ namespace SamsungAPI2
 
                                         case 6: //Answer Order
                                             answerOrder = int.Parse(cellValue);
-                                            AnswersAppendDetails(answerId, answerText, answerOrder);
+                                            AnswersAppendDetails(answerId, answerText, answerOrder, questionId, currentCategory.Id);
                                             break;
 
                                         default: //product coloumns 6 and greater
@@ -188,12 +191,14 @@ namespace SamsungAPI2
             }
         }
 
-        private void AnswersAppendDetails(int answerId, string answerText, int answerOrder)
+        private void AnswersAppendDetails(int answerId, string answerText, int answerOrder, int questionId, int categoryId)
         {
             CurrentQuestion.Answers.Add(new Answer()
             {
                 Id = answerId,
                 Text = answerText,
+                QuestionId = questionId,
+                CategoryId = categoryId,
                 Order = answerOrder
             });
         }

@@ -3,7 +3,7 @@
   "discoveryVersion": "v1",
   "id": "SamsungAPI2",
   "name": "SamsungAPI2",
-  "version": "1.17",
+  "version": "1.0",
   "protocol": "dll",
   "baseUrl": null,
   "basePath": "SamsungAPI2",
@@ -55,6 +55,16 @@
           "title": "Id",
           "type": "integer",
           "description": "Id"
+        },
+        "CategoryId": {
+          "title": "CategoryId",
+          "type": "integer",
+          "description": "CategoryId"
+        },
+        "QuestionId": {
+          "title": "QuestionId",
+          "type": "integer",
+          "description": "QuestionId"
         },
         "Order": {
           "title": "Order",
@@ -220,6 +230,31 @@
           "description": "GetResults",
           "response": {
             "type": "null"
+          }
+        },
+        "SelectAnswer": {
+          "title": "SelectAnswer",
+          "description": "SelectAnswer",
+          "response": {
+            "type": "null"
+          },
+          "parameters": {
+            "categoryId": {
+              "type": "integer",
+              "required": true
+            },
+            "questionId": {
+              "type": "integer",
+              "required": true
+            },
+            "answerId": {
+              "type": "integer",
+              "required": true
+            },
+            "isSelected": {
+              "type": "boolean",
+              "required": true
+            }
           }
         }
       }

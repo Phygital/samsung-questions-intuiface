@@ -1,0 +1,388 @@
+{
+  "kind": "discovery#restDescription",
+  "discoveryVersion": "v1",
+  "id": "SamsungAPI2",
+  "name": "SamsungAPI2",
+  "version": "1.21",
+  "protocol": "dll",
+  "baseUrl": null,
+  "basePath": "SamsungAPI2",
+  "auth": {},
+  "dependencies": [
+    "SamsungAPI2.dll",
+    "DocumentFormat.OpenXml.dll",
+    "System.IO.Packaging.dll"
+  ],
+  "schemas": {
+    "SamsungQuestionsManager": {
+      "id": "SamsungQuestionsManager",
+      "type": "object",
+      "properties": {
+        "Counter": {
+          "title": "Counter",
+          "type": "integer",
+          "description": "Counter"
+        },
+        "CategoriesLength": {
+          "title": "CategoriesLength",
+          "type": "integer",
+          "description": "CategoriesLength"
+        },
+        "Categories": {
+          "title": "Categories",
+          "type": "array",
+          "description": "Categories",
+          "items": {
+            "$ref": "Category"
+          }
+        }
+      }
+    },
+    "SpreadsheetManager": {
+      "id": "SpreadsheetManager",
+      "type": "object"
+    },
+    "Answer": {
+      "id": "Answer",
+      "type": "object",
+      "properties": {
+        "Text": {
+          "title": "Text",
+          "type": "string",
+          "description": "Text"
+        },
+        "Id": {
+          "title": "Id",
+          "type": "integer",
+          "description": "Id"
+        },
+        "CategoryId": {
+          "title": "CategoryId",
+          "type": "integer",
+          "description": "CategoryId"
+        },
+        "QuestionId": {
+          "title": "QuestionId",
+          "type": "integer",
+          "description": "QuestionId"
+        },
+        "Order": {
+          "title": "Order",
+          "type": "integer",
+          "description": "Order"
+        },
+        "AnswerWeighting": {
+          "title": "AnswerWeighting",
+          "type": "array",
+          "description": "AnswerWeighting",
+          "items": {
+            "$ref": "AnswerWeighting"
+          }
+        }
+      }
+    },
+    "AnswerWeighting": {
+      "id": "AnswerWeighting",
+      "type": "object",
+      "properties": {
+        "ProductId": {
+          "title": "ProductId",
+          "type": "integer",
+          "description": "ProductId"
+        },
+        "Weight": {
+          "title": "Weight",
+          "type": "integer",
+          "description": "Weight"
+        }
+      }
+    },
+    "Category": {
+      "id": "Category",
+      "type": "object",
+      "properties": {
+        "Name": {
+          "title": "Name",
+          "type": "string",
+          "description": "Name"
+        },
+        "Id": {
+          "title": "Id",
+          "type": "integer",
+          "description": "Id"
+        },
+        "Questions": {
+          "title": "Questions",
+          "type": "array",
+          "description": "Questions",
+          "items": {
+            "$ref": "Question"
+          }
+        },
+        "Products": {
+          "title": "Products",
+          "type": "array",
+          "description": "Products",
+          "items": {
+            "$ref": "Product"
+          }
+        },
+        "QuestionsLength": {
+          "title": "QuestionsLength",
+          "type": "integer",
+          "description": "QuestionsLength"
+        },
+        "ProductResults": {
+          "title": "ProductResults",
+          "type": "array",
+          "description": "ProductResults",
+          "items": {
+            "$ref": "Product"
+          }
+        }
+      }
+    },
+    "Product": {
+      "id": "Product",
+      "type": "object",
+      "properties": {
+        "Name": {
+          "title": "Name",
+          "type": "string",
+          "description": "Name"
+        },
+        "Id": {
+          "title": "Id",
+          "type": "integer",
+          "description": "Id"
+        },
+        "Description": {
+          "title": "Description",
+          "type": "string",
+          "description": "Description"
+        },
+        "ProductScore": {
+          "$ref": "ProductScore"
+        }
+      }
+    },
+    "ProductScore": {
+      "id": "ProductScore",
+      "type": "object",
+      "properties": {
+        "Score": {
+          "title": "Score",
+          "type": "integer",
+          "description": "Score"
+        }
+      }
+    },
+    "Question": {
+      "id": "Question",
+      "type": "object",
+      "properties": {
+        "Text": {
+          "title": "Text",
+          "type": "string",
+          "description": "Text"
+        },
+        "Id": {
+          "title": "Id",
+          "type": "integer",
+          "description": "Id"
+        },
+        "Order": {
+          "title": "Order",
+          "type": "integer",
+          "description": "Order"
+        },
+        "QuestionDisplayType": {
+          "title": "QuestionDisplayType",
+          "type": "string",
+          "description": "QuestionDisplayType"
+        },
+        "Answers": {
+          "title": "Answers",
+          "type": "array",
+          "description": "Answers",
+          "items": {
+            "$ref": "Answer"
+          }
+        }
+      }
+    },
+    "QuestionDisplayType": {
+      "id": "QuestionDisplayType",
+      "type": "string",
+      "enum": [
+        "CheckBox",
+        "Radio"
+      ]
+    }
+  },
+  "resources": {
+    "SamsungQuestionsManager": {
+      "title": "SamsungQuestionsManager",
+      "isInterfaceAsset": true,
+      "methods": {
+        "GetResults": {
+          "title": "GetResults",
+          "description": "GetResults",
+          "response": {
+            "type": "null"
+          }
+        },
+        "SelectAnswer": {
+          "title": "SelectAnswer",
+          "description": "SelectAnswer",
+          "response": {
+            "type": "null"
+          },
+          "parameters": {
+            "categoryId": {
+              "type": "integer",
+              "required": true
+            },
+            "questionId": {
+              "type": "integer",
+              "required": true
+            },
+            "answerId": {
+              "type": "integer",
+              "required": true
+            },
+            "isSelected": {
+              "type": "boolean",
+              "required": true
+            }
+          }
+        }
+      }
+    },
+    "SpreadsheetManager": {
+      "title": "SpreadsheetManager",
+      "isInterfaceAsset": true,
+      "methods": {
+        "ReadSpreadSheet": {
+          "title": "ReadSpreadSheet",
+          "description": "ReadSpreadSheet",
+          "response": {
+            "$ref": "System.Collections.Generic.List`1[SamsungAPI2.Category]"
+          },
+          "parameters": {
+            "fname": {
+              "type": "string",
+              "required": true
+            },
+            "firstRowIsHeader": {
+              "type": "boolean",
+              "required": true
+            }
+          }
+        }
+      }
+    },
+    "Answer": {
+      "title": "Answer",
+      "isInterfaceAsset": true
+    },
+    "AnswerWeighting": {
+      "title": "AnswerWeighting",
+      "isInterfaceAsset": true
+    },
+    "Category": {
+      "title": "Category",
+      "isInterfaceAsset": true,
+      "methods": {
+        "GetTopItems": {
+          "title": "GetTopItems",
+          "description": "GetTopItems",
+          "response": {
+            "type": "null"
+          },
+          "parameters": {
+            "topItemCount": {
+              "type": "integer",
+              "required": true
+            }
+          }
+        },
+        "ResetScores": {
+          "title": "ResetScores",
+          "description": "ResetScores",
+          "response": {
+            "type": "null"
+          }
+        },
+        "SelectAnswer": {
+          "title": "SelectAnswer",
+          "description": "SelectAnswer",
+          "response": {
+            "type": "null"
+          },
+          "parameters": {
+            "questionId": {
+              "type": "integer",
+              "required": true
+            },
+            "answerId": {
+              "type": "integer",
+              "required": true
+            },
+            "isSelected": {
+              "type": "boolean",
+              "required": true
+            }
+          }
+        }
+      }
+    },
+    "Product": {
+      "title": "Product",
+      "isInterfaceAsset": true
+    },
+    "ProductScore": {
+      "title": "ProductScore",
+      "isInterfaceAsset": true,
+      "methods": {
+        "Add": {
+          "title": "Add",
+          "description": "Add",
+          "response": {
+            "type": "null"
+          },
+          "parameters": {
+            "weighting": {
+              "type": "integer",
+              "required": true
+            }
+          }
+        },
+        "Subtract": {
+          "title": "Subtract",
+          "description": "Subtract",
+          "response": {
+            "type": "null"
+          },
+          "parameters": {
+            "weighting": {
+              "type": "integer",
+              "required": true
+            }
+          }
+        },
+        "Reset": {
+          "title": "Reset",
+          "description": "Reset",
+          "response": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    "Question": {
+      "title": "Question",
+      "isInterfaceAsset": true
+    }
+  }
+}

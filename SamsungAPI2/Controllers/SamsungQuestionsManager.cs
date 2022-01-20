@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace SamsungAPI2
@@ -11,7 +12,8 @@ namespace SamsungAPI2
         public SamsungQuestionsManager()
         {
 #if DEBUG
-            var fname = "../../../SamsungQuestions.xlsx/SamsungQuestions.xlsx";
+//            var fname = "../../../SamsungQuestions.xlsx/SamsungQuestions.xlsx";
+            var fname = "./SamsungQuestions.xlsx/SamsungQuestions.xlsx";
 #else
             var fname = "./SamsungQuestions.xlsx/SamsungQuestions.xlsx";
 #endif
@@ -55,15 +57,15 @@ namespace SamsungAPI2
 
         public void GetResults()
         {
-            Counter++;
-            Categories.Add(new Category()
-            {
-                Id = 5,
-                Name = "Noel"
-            });
-
-            OnPropertyChanged(nameof(Categories));
+            
         }
+
+        public void SelectAnswer(int categoryId, int questionId, int answerId, bool isSelected)
+        {
+            var currentCat = _categories.SingleOrDefault(x => x.Id == categoryId);
+            currentCat?.SelectAnswer(questionId,answerId, isSelected);
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

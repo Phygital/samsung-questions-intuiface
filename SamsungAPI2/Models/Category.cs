@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 
 namespace SamsungAPI2
 {
-    public class Category
+    public class Category: INotifyPropertyChanged
     {
         public string Name { get; set; }
         
@@ -29,14 +30,18 @@ namespace SamsungAPI2
             {
                 ProductResults.Add(product);
             }
+            OnPropertyChanged(nameof(ProductResults));
         }
 
         public void ResetScores()
         {
+            ProductResults.Clear();
+            
             foreach (Product product in Products)
             {
                 product.ProductScore.Reset();                
             }
+            OnPropertyChanged(nameof(ProductResults));
         }
         
         public void SelectAnswer(int questionId, int answerId, bool isSelected)
@@ -62,6 +67,15 @@ namespace SamsungAPI2
                     }
                 }
             }
+
+            GetTopItems(3);
+        }
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         
 
