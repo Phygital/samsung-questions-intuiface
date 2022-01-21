@@ -9,6 +9,9 @@ namespace SamsungAPI2
 {
     public class SamsungQuestionsManager : INotifyPropertyChanged
     {
+        private ObservableCollection<Product> _productResults; 
+        private ObservableCollection<Category> _categories;
+        
         public SamsungQuestionsManager()
         {
 #if DEBUG
@@ -22,27 +25,18 @@ namespace SamsungAPI2
                 Console.WriteLine(Assembly.GetExecutingAssembly().Location);    
             }
             
+            _productResults = new ObservableCollection<Product>();
+    
             SpreadsheetManager spreadsheetManager = new SpreadsheetManager();
             _categories = new ObservableCollection<Category>(spreadsheetManager.ReadSpreadSheet(fname, true));
+            
+            GetTopItems(3, 1);
         }
 
-        private int _counter = 0;
-
-        public int Counter
-        {
-            get { return _counter; }
-            set
-            {
-                _counter = value; 
-                OnPropertyChanged(nameof(Counter));
-            }
-        } 
         public int CategoriesLength
         {
             get => Categories.Count;
         }
-
-        private ObservableCollection<Category> _categories;
 
         public ObservableCollection<Category> Categories
         {
@@ -53,17 +47,50 @@ namespace SamsungAPI2
                 OnPropertyChanged(nameof(Categories));
             }
         }
-
-
+        public ObservableCollection<Product> ProductResults
+        {
+            get { return _productResults; }
+            set
+            {
+                _productResults = value;
+                OnPropertyChanged(nameof(ProductResults));
+            }
+        }
+        
         public void GetResults()
         {
             
         }
+        public void GetTopItems(int topItemCount, int categoryId)
+        {
+            ProductResults.Clear();
+            var category = _categories.FirstOrDefault(x => x.Id == categoryId);
+            var topProducts = category.Products.OrderByDescending(x => x.ProductScore.Score).Take(topItemCount);
+            foreach (var product in topProducts)
+            {
+                ProductResults.Add(product);
+            }
+            OnPropertyChanged(nameof(ProductResults));
+        }
+        
+        public void ResetScores(int categoryId)
+        {
+            ProductResults.Clear();
+            var category = _categories.FirstOrDefault(x => x.Id == categoryId);
+            
+            foreach (Product product in category.Products)
+            {
+                product.ProductScore.Reset();                
+            }
+            OnPropertyChanged(nameof(ProductResults));
+        }
+
 
         public void SelectAnswer(int categoryId, int questionId, int answerId, bool isSelected)
         {
             var currentCat = _categories.SingleOrDefault(x => x.Id == categoryId);
             currentCat?.SelectAnswer(questionId,answerId, isSelected);
+            GetTopItems(3, categoryId);
         }
 
 

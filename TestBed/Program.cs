@@ -45,8 +45,8 @@ namespace TestBed
                 Console.WriteLine(
                     $"Product score subtract 3: {category.Products[0].ProductScore.Score}");
 
-                category.GetTopItems(3);
-                foreach (Product item in category.ProductResults)
+                samsungQuestionsManager.GetTopItems(3,category.Id);
+                foreach (Product item in samsungQuestionsManager.ProductResults)
                 {
                     Console.WriteLine($"Top scores: {item.Name} : {item.ProductScore.Score} ");
                 }
@@ -54,7 +54,7 @@ namespace TestBed
                 category.Products[1].ProductScore.Reset();
                 Console.WriteLine($"Product score reset: {category.Products[1].ProductScore.Score}");
                 
-                category.ResetScores();
+                samsungQuestionsManager.ResetScores(category.Id);
                 Console.WriteLine($"Product score reset: {category.Products[0].ProductScore.Score}");
             }
             else

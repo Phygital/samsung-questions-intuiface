@@ -17,6 +17,6 @@ namespace SamsungAPI2
 
         public List<AnswerWeighting> AnswerWeighting { get; set; } = new List<AnswerWeighting>();
 
-
+        public bool IsSelected { get; set; }
     }
 }

@@ -20,30 +20,8 @@ namespace SamsungAPI2
             get => Questions.Count;
         }
         
-        public ObservableCollection<Product> ProductResults { get; set; } = new ObservableCollection<Product>();
+        //public ObservableCollection<Product> ProductResults { get; set; } = new ObservableCollection<Product>();
 
-        public void GetTopItems(int topItemCount)
-        {
-            ProductResults.Clear();
-            var topProducts = Products.OrderByDescending(x => x.ProductScore.Score).Take(topItemCount);
-            foreach (var product in topProducts)
-            {
-                ProductResults.Add(product);
-            }
-            OnPropertyChanged(nameof(ProductResults));
-        }
-
-        public void ResetScores()
-        {
-            ProductResults.Clear();
-            
-            foreach (Product product in Products)
-            {
-                product.ProductScore.Reset();                
-            }
-            OnPropertyChanged(nameof(ProductResults));
-        }
-        
         public void SelectAnswer(int questionId, int answerId, bool isSelected)
         {
             Question question = Questions.Find(x => x.Id == questionId);
@@ -67,8 +45,6 @@ namespace SamsungAPI2
                     }
                 }
             }
-
-            GetTopItems(3);
         }
         
         public event PropertyChangedEventHandler PropertyChanged;
