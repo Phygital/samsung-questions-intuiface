@@ -112,7 +112,7 @@ namespace SamsungAPI2
 
                             int answerId = 0;
                             string answerText = string.Empty;
-                            int answerOrder = 0;
+                            int answerGroup = 0;
 
                             int iprod = 1;
                             foreach (Cell cell in row.Descendants<Cell>())
@@ -149,9 +149,9 @@ namespace SamsungAPI2
                                             answerId = int.Parse(cellValue);
                                             break;
 
-                                        case 6: //Answer Order
-                                            answerOrder = int.Parse(cellValue);
-                                            AnswersAppendDetails(answerId, answerText, answerOrder, questionId, currentCategory.Id);
+                                        case 6: //Answer Groupr
+                                            answerGroup = int.Parse(cellValue);
+                                            AnswersAppendDetails(answerId, answerText, answerGroup, questionId, currentCategory.Id);
                                             break;
 
                                         default: //product coloumns 6 and greater
@@ -199,7 +199,7 @@ namespace SamsungAPI2
                 Text = answerText,
                 QuestionId = questionId,
                 CategoryId = categoryId,
-                Order = answerOrder
+                Group = answerOrder
             });
         }
 

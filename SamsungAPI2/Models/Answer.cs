@@ -13,7 +13,7 @@ namespace SamsungAPI2
 
         public int QuestionId { get; set; }
         
-        public int Order { get; set; }
+        public int Group { get; set; }
 
         public List<AnswerWeighting> AnswerWeighting { get; set; } = new List<AnswerWeighting>();
 

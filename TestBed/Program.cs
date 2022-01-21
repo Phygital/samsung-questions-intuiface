@@ -45,7 +45,7 @@ namespace TestBed
                 Console.WriteLine(
                     $"Product score subtract 3: {category.Products[0].ProductScore.Score}");
 
-                samsungQuestionsManager.GetTopItems(3,category.Id);
+                samsungQuestionsManager.GetTopItems(category.Id);
                 foreach (Product item in samsungQuestionsManager.ProductResults)
                 {
                     Console.WriteLine($"Top scores: {item.Name} : {item.ProductScore.Score} ");

@@ -3,7 +3,7 @@
   "discoveryVersion": "v1",
   "id": "SamsungAPI2",
   "name": "SamsungAPI2",
-  "version": "1.24",
+  "version": "1.26",
   "protocol": "dll",
   "baseUrl": null,
   "basePath": "SamsungAPI2",
@@ -69,10 +69,10 @@
           "type": "integer",
           "description": "QuestionId"
         },
-        "Order": {
-          "title": "Order",
+        "Group": {
+          "title": "Group",
           "type": "integer",
-          "description": "Order"
+          "description": "Group"
         },
         "AnswerWeighting": {
           "title": "AnswerWeighting",
@@ -81,6 +81,11 @@
           "items": {
             "$ref": "AnswerWeighting"
           }
+        },
+        "IsSelected": {
+          "title": "IsSelected",
+          "type": "boolean",
+          "description": "IsSelected"
         }
       }
     },
@@ -234,10 +239,19 @@
             "type": "null"
           },
           "parameters": {
-            "topItemCount": {
+            "categoryId": {
               "type": "integer",
               "required": true
-            },
+            }
+          }
+        },
+        "CalculateWeighting": {
+          "title": "CalculateWeighting",
+          "description": "CalculateWeighting",
+          "response": {
+            "type": "null"
+          },
+          "parameters": {
             "categoryId": {
               "type": "integer",
               "required": true

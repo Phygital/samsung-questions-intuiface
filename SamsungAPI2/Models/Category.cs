@@ -29,21 +29,23 @@ namespace SamsungAPI2
 
             if (answer != null && answer.AnswerWeighting != null)
             {
-                foreach (AnswerWeighting answerWeight in answer.AnswerWeighting)
-                {
-                    Product product = Products.Find(x => x.Id == answerWeight.ProductId);
-                    
-                    if(product == null) return;
-                    
-                    if (isSelected)
-                    {
-                        product.ProductScore.Add(answerWeight.Weight);
-                    }
-                    else
-                    {
-                        product.ProductScore.Subtract(answerWeight.Weight);
-                    }
-                }
+                answer.IsSelected = isSelected;
+                
+                // foreach (AnswerWeighting answerWeight in answer.AnswerWeighting)
+                // {
+                //     Product product = Products.Find(x => x.Id == answerWeight.ProductId);
+                //     
+                //     if(product == null) return;
+                //     
+                //     if (isSelected)
+                //     {
+                //         product.ProductScore.Add(answerWeight.Weight);
+                //     }
+                //     else
+                //     {
+                //         product.ProductScore.Subtract(answerWeight.Weight);
+                //     }
+                // }
             }
         }
         
