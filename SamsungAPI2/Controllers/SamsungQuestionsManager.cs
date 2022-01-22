@@ -9,23 +9,28 @@ namespace SamsungAPI2
 {
     public class SamsungQuestionsManager : INotifyPropertyChanged
     {
-        private ObservableCollection<Product> _productResults; 
+        private ObservableCollection<Product> _productResults;
         private ObservableCollection<Category> _categories;
-        
+
         private int TopItemCount { get; set; } = 1;
-        
+
         public SamsungQuestionsManager()
         {
-            //debug path
-            //var fname = "../../../SamsungQuestions.xlsx/SamsungQuestions.xlsx";
-            var fname = "./SamsungQuestions.xlsx/SamsungQuestions.xlsx";
-            
+            var fname = $"{CurrentDirectory}\\SamsungQuestions.xlsx";
+
             _productResults = new ObservableCollection<Product>();
-    
+
             SpreadsheetManager spreadsheetManager = new SpreadsheetManager();
             _categories = new ObservableCollection<Category>(spreadsheetManager.ReadSpreadSheet(fname, true));
-            
+
             GetTopItems(1);
+        }
+
+
+
+        public string CurrentDirectory
+        {
+            get => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         }
 
         public int CategoriesLength
@@ -42,7 +47,7 @@ namespace SamsungAPI2
                 OnPropertyChanged(nameof(Categories));
             }
         }
-        
+
         public ObservableCollection<Product> ProductResults
         {
             get { return _productResults; }
@@ -52,37 +57,37 @@ namespace SamsungAPI2
                 OnPropertyChanged(nameof(ProductResults));
             }
         }
-        
+
         public void GetResults()
         {
-            
+
         }
 
         public void GetTopItems(int categoryId)
         {
             var category = _categories.FirstOrDefault(x => x.Id == categoryId);
             if (category == null) return;
-            
+
             ProductResults.Clear();
-            
+
             ResetScores(category.Id);
 
             CalculateWeighting(category.Id);
-            
+
             var topProducts = category.Products.OrderByDescending(x => x.ProductScore.Score).Take(TopItemCount);
-            
+
             foreach (var product in topProducts)
             {
                 ProductResults.Add(product);
             }
-            
+
             OnPropertyChanged(nameof(ProductResults));
         }
-        
+
         public void CalculateWeighting(int categoryId)
         {
             var category = _categories.FirstOrDefault(x => x.Id == categoryId);
-            
+
             if(category!= null && category.Questions.Any())
             {
                 foreach (var question in category.Questions)
@@ -101,16 +106,16 @@ namespace SamsungAPI2
                 }
             }
         }
-        
-        
+
+
         public void ResetScores(int categoryId)
         {
             ProductResults.Clear();
             var category = _categories.FirstOrDefault(x => x.Id == categoryId);
-            
+
             foreach (Product product in category.Products)
             {
-                product.ProductScore.Reset();                
+                product.ProductScore.Reset();
             }
             OnPropertyChanged(nameof(ProductResults));
         }

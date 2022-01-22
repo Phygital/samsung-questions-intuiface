@@ -21,17 +21,15 @@ namespace SamsungAPI2
 
         private Question CurrentQuestion { get; set; } = null;
 
-        private int CategoryId { get; set; } = 1;
-
         private string GetCellValue(SpreadsheetDocument doc, Cell cell)
         {
             if (cell.CellValue == null || cell.CellValue.InnerText == string.Empty) return string.Empty;
 
-            string value = cell.CellValue.InnerText;
+            var value = cell.CellValue.InnerText;
             if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
             {
                 return doc.WorkbookPart.SharedStringTablePart.SharedStringTable.ChildElements.GetItem(int.Parse(value))
-                    .InnerText;
+                          .InnerText;
             }
 
             return value;
@@ -41,40 +39,29 @@ namespace SamsungAPI2
         {
             if (!File.Exists(fname))
             {
-                return new List<Category>()
-                {
-                    new Category()
-                    {
-                        Id = 99, Name = $"File Not Found: {fname}"
-                    },
-                    new Category()
-                    {
-                        Id = 98,
-                        Name = Assembly.GetExecutingAssembly().Location,
-                    }
-                };
+                return new List<Category>();
             }
 
             var categories = new List<Category>();
             int categoryId = 0;
-            
+
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(fname, false))
             {
-                //Sheet sheet = doc.WorkbookPart.Workbook.Sheets.GetFirstChild<Sheet>();
-                    
                 foreach (var openXmlElement in doc.WorkbookPart.Workbook.Sheets)
                 {
                     categoryId++;
-                    
-                    var sheet = (Sheet)openXmlElement;
-                    
-                    Worksheet worksheet = ((doc.WorkbookPart.GetPartById(sheet.Id.Value)) as WorksheetPart).Worksheet;
-                    IEnumerable<Row> rows = worksheet.GetFirstChild<SheetData>().Descendants<Row>();
 
-                    currentCategory = new Category();
+                    var sheet = (Sheet) openXmlElement;
 
-                    currentCategory.Name = sheet.Name;
-                    currentCategory.Id = categoryId;
+                    var worksheet = ((doc.WorkbookPart.GetPartById(sheet.Id.Value)) as WorksheetPart).Worksheet;
+                    var rows = worksheet.GetFirstChild<SheetData>().Descendants<Row>();
+
+                    currentCategory = new Category
+                                      {
+                                          Name = sheet.Name,
+                                          Id = categoryId
+                                      };
+
 
                     foreach (Row row in rows)
                     {
@@ -91,11 +78,11 @@ namespace SamsungAPI2
                                 if (j > 7) // Product columns, so create a new product for each
                                 {
                                     currentCategory.Products.Add(new Product()
-                                    {
-                                        Id = iProd,
-                                        Name = colunmName,
-                                        Description = colunmName
-                                    });
+                                                                 {
+                                                                     Id = iProd,
+                                                                     Name = colunmName,
+                                                                     Description = colunmName
+                                                                 });
                                     iProd++;
                                 }
 
@@ -104,17 +91,13 @@ namespace SamsungAPI2
                         }
                         else
                         {
-                            int i = 0;
-                            int questionId = 0;
-                            string questionText = string.Empty;
-                            string questionType = string.Empty;
-                            int questionOrder = 0;
-
-                            int answerId = 0;
-                            string answerText = string.Empty;
-                            int answerGroup = 0;
-
-                            int iprod = 1;
+                            var i = 0;
+                            var questionId = 0;
+                            var questionText = string.Empty;
+                            var questionOrder = 0;
+                            var answerId = 0;
+                            var answerText = string.Empty;
+                            var productIndex = 1;
                             foreach (Cell cell in row.Descendants<Cell>())
                             {
                                 string cellValue = GetCellValue(doc, cell);
@@ -135,9 +118,9 @@ namespace SamsungAPI2
                                             break;
 
                                         case 3: //Question Type
-                                            questionType = cellValue;
+                                            var questionType = cellValue;
                                             QuestionAppendDetails(questionId, questionText, questionOrder,
-                                                questionType);
+                                                                  questionType);
 
                                             break;
 
@@ -149,14 +132,14 @@ namespace SamsungAPI2
                                             answerId = int.Parse(cellValue);
                                             break;
 
-                                        case 6: //Answer Groupr
-                                            answerGroup = int.Parse(cellValue);
+                                        case 6: //Answer Groups
+                                            var answerGroup = int.Parse(cellValue);
                                             AnswersAppendDetails(answerId, answerText, answerGroup, questionId, currentCategory.Id);
                                             break;
 
-                                        default: //product coloumns 6 and greater
-                                            AnswersAppendWeighting(answerId, iprod, int.Parse(cellValue));
-                                            iprod++;
+                                        default: //Product Columns 6 and greater
+                                            AnswersAppendWeighting(answerId, productIndex, int.Parse(cellValue));
+                                            productIndex++;
                                             break;
                                     }
                                 }
@@ -178,14 +161,13 @@ namespace SamsungAPI2
         {
             if (!currentCategory.Questions.Exists(x => x.Id == questionId))
             {
-                currentCategory.Questions.Add(new Question()
-                {
-                    Id = questionId,
-                    Text = questionText,
-                    Order = questionOrder,
-                    QuestionDisplayType = questionType
-                    //(QuestionDisplayType)Enum.Parse(typeof(QuestionDisplayType), questionType, true)
-                });
+                currentCategory.Questions.Add(new Question
+                                              {
+                                                  Id = questionId,
+                                                  Text = questionText,
+                                                  Order = questionOrder,
+                                                  QuestionDisplayType = questionType
+                                              });
 
                 CurrentQuestion = currentCategory.Questions.FirstOrDefault(x => x.Id == questionId);
             }
@@ -193,14 +175,14 @@ namespace SamsungAPI2
 
         private void AnswersAppendDetails(int answerId, string answerText, int answerOrder, int questionId, int categoryId)
         {
-            CurrentQuestion.Answers.Add(new Answer()
-            {
-                Id = answerId,
-                Text = answerText,
-                QuestionId = questionId,
-                CategoryId = categoryId,
-                Group = answerOrder
-            });
+            CurrentQuestion.Answers.Add(new Answer
+                                        {
+                                            Id = answerId,
+                                            Text = answerText,
+                                            QuestionId = questionId,
+                                            CategoryId = categoryId,
+                                            Group = answerOrder
+                                        });
         }
 
         private void AnswersAppendWeighting(int answerId, int productId, int weighting)
@@ -209,11 +191,11 @@ namespace SamsungAPI2
 
             if (answer != null)
             {
-                answer.AnswerWeighting.Add(new AnswerWeighting()
-                {
-                    ProductId = productId,
-                    Weight = weighting
-                });
+                answer.AnswerWeighting.Add(new AnswerWeighting
+                                           {
+                                               ProductId = productId,
+                                               Weight = weighting
+                                           });
             }
         }
     }

@@ -7,4 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = TestBed
-build_property.ProjectDir = C:\timbo\dev\Source\Repos\samsung-questions-intuiface\TestBed\
+build_property.ProjectDir = C:\Development\Web\samsung-questions-intuiface\TestBed\

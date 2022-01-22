@@ -12,6 +12,38 @@
       <None Update="2SamsungQuestions.xlsx\SamsungQuestions.xlsx">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Remove="SamsungQuestions.xlsx\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="SamsungQuestions.xlsx\SamsungQuestions.xlsx" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="SamsungQuestions.xlsx\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="SamsungQuestions.xlsx\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="SamsungQuestions.xlsx" />
+      <Content Include="SamsungQuestions.xlsx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="DocumentFormat.OpenXml.dll" />
+      <Content Include="DocumentFormat.OpenXml.dll">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="DocumentFormat.OpenXml.xml" />
+      <Content Include="DocumentFormat.OpenXml.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="System.IO.Packaging.dll" />
+      <Content Include="System.IO.Packaging.dll">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
