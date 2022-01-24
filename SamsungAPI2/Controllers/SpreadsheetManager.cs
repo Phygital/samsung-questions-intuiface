@@ -13,13 +13,16 @@ namespace SamsungAPI2
 {
     public class SpreadsheetManager
     {
-        Category currentCategory;
+        private Category _currentCategory;
+        private Question _currentQuestion;
+        private AnswerGrouping _currentAnswerGrouping;
+
 
         public SpreadsheetManager()
         {
         }
 
-        private Question CurrentQuestion { get; set; } = null;
+
 
         private string GetCellValue(SpreadsheetDocument doc, Cell cell)
         {
@@ -56,7 +59,7 @@ namespace SamsungAPI2
                     var worksheet = ((doc.WorkbookPart.GetPartById(sheet.Id.Value)) as WorksheetPart).Worksheet;
                     var rows = worksheet.GetFirstChild<SheetData>().Descendants<Row>();
 
-                    currentCategory = new Category
+                    _currentCategory = new Category
                                       {
                                           Name = sheet.Name,
                                           Id = categoryId
@@ -77,7 +80,7 @@ namespace SamsungAPI2
 
                                 if (j > 7) // Product columns, so create a new product for each
                                 {
-                                    currentCategory.Products.Add(new Product()
+                                    _currentCategory.Products.Add(new Product()
                                                                  {
                                                                      Id = iProd,
                                                                      Name = colunmName,
@@ -95,6 +98,7 @@ namespace SamsungAPI2
                             var questionId = 0;
                             var questionText = string.Empty;
                             var questionOrder = 0;
+                            var questionType = string.Empty;
                             var answerId = 0;
                             var answerText = string.Empty;
                             var productIndex = 1;
@@ -118,7 +122,7 @@ namespace SamsungAPI2
                                             break;
 
                                         case 3: //Question Type
-                                            var questionType = cellValue;
+                                            questionType = cellValue;
                                             QuestionAppendDetails(questionId, questionText, questionOrder,
                                                                   questionType);
 
@@ -133,8 +137,7 @@ namespace SamsungAPI2
                                             break;
 
                                         case 6: //Answer Groups
-                                            var answerGroup = int.Parse(cellValue);
-                                            AnswersAppendDetails(answerId, answerText, answerGroup, questionId, currentCategory.Id);
+                                            AnswersAppendDetails(answerId, answerText, cellValue, questionId, _currentCategory.Id);
                                             break;
 
                                         default: //Product Columns 6 and greater
@@ -150,7 +153,7 @@ namespace SamsungAPI2
                     }
 
                     //Add Category to collection
-                    categories.Add(currentCategory);
+                    categories.Add(_currentCategory);
                 }
 
                 return categories;
@@ -159,9 +162,9 @@ namespace SamsungAPI2
 
         private void QuestionAppendDetails(int questionId, string questionText, int questionOrder, string questionType)
         {
-            if (!currentCategory.Questions.Exists(x => x.Id == questionId))
+            if (!_currentCategory.Questions.Exists(x => x.Id == questionId))
             {
-                currentCategory.Questions.Add(new Question
+                _currentCategory.Questions.Add(new Question
                                               {
                                                   Id = questionId,
                                                   Text = questionText,
@@ -169,25 +172,40 @@ namespace SamsungAPI2
                                                   QuestionDisplayType = questionType
                                               });
 
-                CurrentQuestion = currentCategory.Questions.FirstOrDefault(x => x.Id == questionId);
+                _currentQuestion = _currentCategory.Questions.FirstOrDefault(x => x.Id == questionId);
             }
         }
 
-        private void AnswersAppendDetails(int answerId, string answerText, int answerOrder, int questionId, int categoryId)
+        private void AnswersAppendDetails(int answerId, string answerText, string answerGroupId, int questionId, int categoryId)
         {
-            CurrentQuestion.Answers.Add(new Answer
-                                        {
-                                            Id = answerId,
-                                            Text = answerText,
-                                            QuestionId = questionId,
-                                            CategoryId = categoryId,
-                                            Group = answerOrder
-                                        });
+            var groupingId = $"{categoryId}_{questionId}_{answerGroupId}";
+            var answerGrouping = _currentQuestion.AnswerGroupings.SingleOrDefault(x => x.GroupId == groupingId);
+            if (answerGrouping == null)
+            {
+                answerGrouping = new AnswerGrouping
+                                 {
+                                     GroupId = groupingId
+                                 };
+                _currentQuestion.AnswerGroupings.Add(answerGrouping);
+
+            }
+
+            _currentAnswerGrouping = answerGrouping;
+            answerGrouping.Answers.Add(new Answer
+                                       {
+                                           Id = answerId,
+                                           Text = answerText,
+                                           QuestionId = questionId,
+                                           CategoryId = categoryId,
+                                           GroupId = answerGrouping.GroupId,
+                                           UsesToggleGroup = _currentQuestion.QuestionDisplayType.ToLower() == "toggle"
+                                       });
         }
 
         private void AnswersAppendWeighting(int answerId, int productId, int weighting)
         {
-            Answer answer = CurrentQuestion.Answers.FirstOrDefault(x => x.Id == answerId);
+            if (_currentAnswerGrouping == null) return;
+            Answer answer = _currentAnswerGrouping.Answers.FirstOrDefault(x => x.Id == answerId);
 
             if (answer != null)
             {

@@ -26,8 +26,6 @@ namespace SamsungAPI2
             GetTopItems(1);
         }
 
-
-
         public string CurrentDirectory
         {
             get => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -58,24 +56,16 @@ namespace SamsungAPI2
             }
         }
 
-        public void GetResults()
-        {
-
-        }
-
         public void GetTopItems(int categoryId)
         {
             var category = _categories.FirstOrDefault(x => x.Id == categoryId);
             if (category == null) return;
 
-            ProductResults.Clear();
-
-            ResetScores(category.Id);
-
             CalculateWeighting(category.Id);
 
-            var topProducts = category.Products.OrderByDescending(x => x.ProductScore.Score).Take(TopItemCount);
+            var topProducts = category.Products.OrderByDescending(x => x.IsPerfectMatch).ThenByDescending(x => x.TotalWeight).Take(TopItemCount);
 
+            ProductResults.Clear();
             foreach (var product in topProducts)
             {
                 ProductResults.Add(product);
@@ -87,45 +77,61 @@ namespace SamsungAPI2
         public void CalculateWeighting(int categoryId)
         {
             var category = _categories.FirstOrDefault(x => x.Id == categoryId);
-
-            if(category!= null && category.Questions.Any())
+            if (category != null && category.Questions.Any())
             {
-                foreach (var question in category.Questions)
+                var products = category.Products;
+                var answers = category.Questions.SelectMany(y => y.AnswerGroupings.SelectMany(x => x.Answers).Where(x => x.IsSelected)).ToList();
+                foreach (var product in products)
                 {
-                    foreach (Answer answer in question.Answers.Where(x => x.IsSelected).ToList())
-                    {
-                        foreach (AnswerWeighting answerWeight in answer.AnswerWeighting)
-                        {
-                            Product product = category.Products.Find(x => x.Id == answerWeight.ProductId);
-
-                            if (product == null) return;
-
-                            product.ProductScore.Add(answerWeight.Weight);
-                        }
-                    }
+                    product.TotalWeight = 0;
+                    var totalWeight = answers.SelectMany(x => x.AnswerWeighting).Where(x => x.ProductId == product.Id).Sum(x => x.Weight);
+                    var isPerfectMatch = answers.SelectMany(x => x.AnswerWeighting).Where(x => x.ProductId == product.Id).All(x => x.Weight > 0);
+                    product.TotalWeight = totalWeight;
+                    product.IsPerfectMatch = isPerfectMatch;
                 }
             }
         }
 
 
-        public void ResetScores(int categoryId)
+        public void ResetScores()
         {
             ProductResults.Clear();
-            var category = _categories.FirstOrDefault(x => x.Id == categoryId);
 
-            foreach (Product product in category.Products)
+            foreach (var category in _categories)
             {
-                product.ProductScore.Reset();
+                category.CurrentQuestionIndex = 1;
+                foreach (Product product in category.Products)
+                {
+                    product.IsPerfectMatch = false;
+                    product.TotalWeight = 0;
+                }
+
+                foreach (var question in category.Questions)
+                {
+                    foreach (var answerGrouping in question.AnswerGroupings)
+                    {
+                        foreach (var answer in answerGrouping.Answers)
+                        {
+                            answer.IsSelected = false;
+                        }
+                    }
+                }
             }
+
             OnPropertyChanged(nameof(ProductResults));
         }
 
-
         public void SelectAnswer(int categoryId, int questionId, int answerId, bool isSelected)
         {
-            var currentCat = _categories.SingleOrDefault(x => x.Id == categoryId);
-            currentCat?.SelectAnswer(questionId,answerId, isSelected);
-            //GetTopItems(categoryId);
+            var category = _categories.SingleOrDefault(x => x.Id == categoryId);
+            category?.SelectAnswer(questionId, answerId, isSelected);
+        }
+
+        public void MoveNextQuestion(int categoryId)
+        {
+            var category = _categories.SingleOrDefault(x => x.Id == categoryId);
+            if (category == null) return;
+            category.CurrentQuestionIndex++;
         }
 
 
